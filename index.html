@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide+</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            color: #fff;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body.light-mode {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Auth Screen */
+        .auth-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .auth-container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+        }
+
+        body.light-mode .auth-container {
+            background: #fff;
+            border-color: rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-title {
+            font-size: 2.5em;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        body.light-mode .auth-title {
+            background: linear-gradient(135deg, #333 0%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .auth-subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: #ccc;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        body.light-mode .form-label {
+            color: #555;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 1em;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .form-input {
+            background: #f9f9f9;
+            border-color: rgba(0, 0, 0, 0.15);
+            color: #333;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        body.light-mode .form-input:focus {
+            border-color: rgba(0, 0, 0, 0.3);
+            background: #fff;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        body.light-mode .btn-primary {
+            background: #333;
+            border-color: #333;
+        }
+
+        body.light-mode .btn-primary:hover {
+            background: #444;
+        }
+
+        .auth-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #888;
+        }
+
+        .auth-link a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        body.light-mode .auth-link a {
+            color: #333;
+        }
+
+        .error-message {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid rgba(244, 67, 54, 0.5);
+            color: #f44336;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        .success-message {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            color: #4CAF50;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        /* Homepage */
+        .homepage {
+            min-height: 100vh;
+            padding: 60px 30px;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+
+        body.light-mode .homepage {
+            background: linear-gradient(180deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+
+        .app-header {
+            text-align: center;
+            margin-bottom: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .app-title {
+            font-size: 2.5em;
+            font-weight: 300;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        body.light-mode .app-title {
+            background: linear-gradient(135deg, #333 0%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .user-menu {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-logout, .btn-admin {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        body.light-mode .btn-logout,
+        body.light-mode .btn-admin {
+            border-color: rgba(0, 0, 0, 0.2);
+            color: #333;
+        }
+
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .theme-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px 30px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        body.light-mode .theme-card {
+            background: #fff;
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .theme-card:hover {
+            background: #fafafa;
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+
+        .theme-icon {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .theme-name {
+            font-size: 1.2em;
+            font-weight: 500;
+            color: #fff;
+            letter-spacing: 0.3px;
+        }
+
+        body.light-mode .theme-name {
+            color: #333;
+        }
+
+        .theme-count {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 8px;
+        }
+
+        body.light-mode .theme-count {
+            color: #999;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        body.light-mode .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .back-btn {
+            color: #333;
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .header-title {
+            font-size: 1.4em;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        /* Posts */
+        .posts-container {
+            padding: 30px;
+            min-height: calc(100vh - 80px);
+            background: #0a0a0a;
+        }
+
+        body.light-mode .posts-container {
+            background: #f5f5f5;
+        }
+
+        .add-post-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 16px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+            margin-bottom: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .add-post-btn {
+            background: #fff;
+            color: #333;
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .post-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        body.light-mode .post-item {
+            background: #fff;
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .post-title {
+            font-size: 1.5em;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        body.light-mode .post-title {
+            color: #333;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85em;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        .post-description {
+            color: #aaa;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            word-wrap: break-word;
+        }
+
+        body.light-mode .post-description {
+            color: #666;
+        }
+
+        .post-rating {
+            color: #ffa500;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            background: transparent;
+            color: #fff;
+        }
+
+        body.light-mode .btn {
+            color: #333;
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+
+        .loading-spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        body.light-mode .loading-spinner {
+            border-color: rgba(0, 0, 0, 0.1);
+            border-top-color: #333;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1.5em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+
+        body.light-mode .theme-toggle {
+            background: #fff;
+            border-color: rgba(0, 0, 0, 0.15);
+            color: #333;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        body.light-mode .modal-content {
+            background: #fff;
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            font-size: 1.8em;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 1em;
+            color: #fff;
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+
+        body.light-mode .form-textarea {
+            background: #f9f9f9;
+            border-color: rgba(0, 0, 0, 0.15);
+            color: #333;
+        }
+
+        .rating-input {
+            display: flex;
+            gap: 12px;
+            font-size: 2em;
+        }
+
+        .star {
+            cursor: pointer;
+            color: rgba(255, 165, 0, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .star.active {
+            color: #ffa500;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        .btn-cancel, .btn-save {
+            flex: 1;
+            padding: 14px;
+            font-size: 1em;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        body.light-mode .btn-cancel {
+            border-color: rgba(0, 0, 0, 0.2);
+            color: #333;
+        }
+
+        .btn-save {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-weight: 500;
+        }
+
+        body.light-mode .btn-save {
+            background: #333;
+            border-color: #333;
+        }
+
+        /* Comments */
+        .comments-section {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        body.light-mode .comments-section {
+            border-top-color: rgba(0, 0, 0, 0.08);
+        }
+
+        .comment-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+        }
+
+        body.light-mode .comment-item {
+            background: #f9f9f9;
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        .comment-author {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        body.light-mode .comment-author {
+            color: #333;
+        }
+
+        .comment-text {
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        body.light-mode .comment-text {
+            color: #666;
+        }
+
+        .reply-item {
+            margin-left: 30px;
+            margin-top: 10px;
+        }
+
+        .btn-reply {
+            background: transparent;
+            border: none;
+            color: #6495ED;
+            cursor: pointer;
+            font-size: 0.85em;
+            padding: 5px 10px;
+            margin-top: 8px;
+        }
+
+        /* Admin */
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        body.light-mode .stat-card {
+            background: #fff;
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        body.light-mode .stat-value {
+            color: #333;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .user-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        body.light-mode .user-item {
+            background: #f9f9f9;
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        .user-name {
+            font-size: 1.1em;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        body.light-mode .user-name {
+            color: #333;
+        }
+
+        .user-email {
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .user-role {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            margin-top: 8px;
+        }
+
+        .user-role.admin {
+            background: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+        }
+
+        .user-role.user {
+            background: rgba(100, 149, 237, 0.2);
+            color: #6495ED;
+        }
+
+        @media (max-width: 768px) {
+            .app-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .themes-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            .post-actions {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Auth Screen -->
+        <div id="authScreen" class="screen active">
+            <div class="auth-screen">
+                <div class="auth-container">
+                    <h1 class="auth-title">Guide+</h1>
+                    <p class="auth-subtitle">Application sur invitation uniquement</p>
+                    
+                    <div id="authMessage"></div>
+                    
+                    <!-- Login Form -->
+                    <div id="loginForm">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" id="loginEmail" placeholder="votre@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mot de passe</label>
+                            <input type="password" class="form-input" id="loginPassword" placeholder="••••••••">
+                        </div>
+                        <button class="btn-primary" onclick="login()">Se connecter</button>
+                        <div class="auth-link">
+                            <a href="#" onclick="showSignupForm(); return false;">Vous avez une invitation ?</a>
+                        </div>
+                    </div>
+
+                    <!-- Signup Form -->
+                    <div id="signupForm" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label">Code d'invitation</label>
+                            <input type="text" class="form-input" id="invitationCode" placeholder="Votre code">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Nom d'utilisateur</label>
+                            <input type="text" class="form-input" id="signupUsername" placeholder="Votre nom">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" id="signupEmail" placeholder="votre@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mot de passe</label>
+                            <input type="password" class="form-input" id="signupPassword" placeholder="••••••••">
+                        </div>
+                        <button class="btn-primary" onclick="signup()">Créer mon compte</button>
+                        <div class="auth-link">
+                            <a href="#" onclick="showLoginForm(); return false;">Déjà un compte ?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Home Screen -->
+        <div id="homeScreen" class="screen">
+            <div class="homepage">
+                <div class="app-header">
+                    <h1 class="app-title">Guide+</h1>
+                    <div class="user-menu">
+                        <button class="btn-admin" id="adminBtn" onclick="showAdminPanel()" style="display: none;">👑 Admin</button>
+                        <span id="userName" style="color: #888;"></span>
+                        <button class="btn-logout" onclick="logout()">Déconnexion</button>
+                    </div>
+                </div>
+                
+                <div class="themes-grid" id="themesGrid">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <p>Chargement...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme Screen -->
+        <div id="themeScreen" class="screen">
+            <div class="header">
+                <button class="back-btn" onclick="showHome()">← Retour</button>
+                <h2 class="header-title" id="themeTitle"></h2>
+                <div></div>
+            </div>
+
+            <div class="posts-container">
+                <button class="add-post-btn" onclick="showAddPostModal()">+ Ajouter un lieu</button>
+                <div id="postsList">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <p>Chargement...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Screen -->
+        <div id="adminScreen" class="screen">
+            <div class="header">
+                <button class="back-btn" onclick="showHome()">← Retour</button>
+                <h2 class="header-title">Panel Admin</h2>
+                <div></div>
+            </div>
+
+            <div class="posts-container">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                    <div class="stat-card">
+                        <div class="stat-value" id="statUsers">0</div>
+                        <div class="stat-label">Utilisateurs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statPosts">0</div>
+                        <div class="stat-label">Lieux</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statComments">0</div>
+                        <div class="stat-label">Commentaires</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <button class="add-post-btn" onclick="generateInvitationCode()">🎟️ Générer un code d'invitation</button>
+                </div>
+
+                <div class="post-item">
+                    <h3 style="margin-bottom: 20px;">👥 Gestion des utilisateurs</h3>
+                    <div id="usersList"></div>
+                </div>
+
+                <div class="post-item" style="margin-top: 20px;">
+                    <h3 style="margin-bottom: 20px;">🎟️ Codes d'invitation
