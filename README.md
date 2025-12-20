@@ -116,6 +116,7 @@ CREATE POLICY "Authenticated can insert" ON comments FOR INSERT WITH CHECK (auth
 
 3. Allez dans **Authentication → Providers**
 4. Activez **Email provider** et désactivez **Confirm email**
+5. Auth Providers, activez "Email".
 
 ### 2. Créer votre compte admin
 
