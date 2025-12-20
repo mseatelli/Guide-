@@ -23,10 +23,6 @@ Application web collaborative sur invitation pour partager et découvrir les mei
 - 🎟️ **Génération de codes d'invitation** avec copie automatique
 - 👥 **Gestion des utilisateurs**
 
-## 🚀 Démo
-
-**[Voir l'application en ligne](https://VOTRE-USERNAME.github.io/VOTRE-REPO/)**
-
 ## 🛠️ Technologies
 
 - **Frontend** : HTML5, CSS3, JavaScript (Vanilla)
