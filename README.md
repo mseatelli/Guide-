@@ -188,8 +188,8 @@ Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou un
 
 ## 📧 Contact
 
-Pour toute question : [Votre email ou lien]
+Pour toute question : [mseatelli@gmail.com]
 
 ---
 
-Fait avec ❤️ par [Votre nom]
+Fait par [Marc Seatelli]
