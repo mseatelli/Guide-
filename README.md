@@ -162,6 +162,8 @@ Votre application sera accessible à : `https://VOTRE-USERNAME.github.io/VOTRE-R
 3. Ajoutez vos lieux préférés avec notes et descriptions
 4. Commentez les posts des autres
 5. Partagez vos découvertes via WhatsApp
+6. Marquez des favoris
+7. Contactez l'administrateur
 
 ### Pour les administrateurs
 
@@ -170,6 +172,7 @@ Votre application sera accessible à : `https://VOTRE-USERNAME.github.io/VOTRE-R
 3. Générez des codes d'invitation (copie automatique)
 4. Gérez les utilisateurs
 5. Consultez les statistiques
+6. Créez des annonces
 
 ## 🔒 Sécurité
 
